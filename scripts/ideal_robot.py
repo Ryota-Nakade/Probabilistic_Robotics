@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[130]:
+# In[37]:
 
 
 import matplotlib
@@ -13,7 +13,7 @@ import matplotlib.patches as patches
 import numpy as np
 
 
-# In[131]:
+# In[54]:
 
 
 class World:
@@ -49,15 +49,25 @@ class World:
     def one_step(self, i, elems, ax):
         while elems:
             elems.pop().remove()
-        time_str = "t=%.2f[s]"%(self.time_interval*i)
-        elems.append(ax.text(-4.4,4.5,"t="+str(i), fontsize=10))
+        time_str = "t = %.2f[s]" % (self.time_interval*i)
+        elems.append(ax.text(-4.4,4.5,time_str, fontsize=10))
         for obj in self.objects:
             obj.draw(ax, elems)
             if hasattr(obj, "one_step"):
                 obj.one_step(self.time_interval)
+#********************************************************************************
+
+        
+#     def one_step(self, i, elems, ax):
+#         while elems: elems.pop().remove()
+#         time_str = "t = %.2f[s]" % (self.time_interval*i)    # 時刻として表示する文字列
+#         elems.append(ax.text(-4.4, 4.5, time_str, fontsize=10))
+#         for obj in self.objects:
+#             obj.draw(ax, elems)
+#             if hasattr(obj, "one_step"): obj.one_step(self.time_interval)            
 
 
-# In[132]:
+# In[55]:
 
 
 class IdealRobot:
@@ -103,7 +113,7 @@ class IdealRobot:
         self.pose = self.state_transition(nu, omega, time_interval, self.pose)
 
 
-# In[133]:
+# In[56]:
 
 
 class Agent:
@@ -115,7 +125,7 @@ class Agent:
         return self.nu, self.omega
 
 
-# In[134]:
+# In[57]:
 
 
 class Landmark:
@@ -129,7 +139,7 @@ class Landmark:
         elems.append(ax.text(self.pos[0], self.pos[1], "id:"+str(self.id), fontsize=10))
 
 
-# In[135]:
+# In[58]:
 
 
 class Map:
@@ -145,7 +155,7 @@ class Map:
             lm.draw(ax, elems)
 
 
-# In[136]:
+# In[59]:
 
 
 class IdealCamera:
@@ -191,7 +201,7 @@ class IdealCamera:
             elems += ax.plot([x,lx],[y,ly], color="pink")
 
 
-# In[139]:
+# In[60]:
 
 
 if __name__ == '__main__':
@@ -214,7 +224,7 @@ if __name__ == '__main__':
     world.draw()
 
 
-# In[108]:
+# In[53]:
 
 
 # cam = IdealCamera(m)

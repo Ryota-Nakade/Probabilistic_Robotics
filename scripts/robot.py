@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[60]:
+# In[86]:
 
 
 import sys
@@ -11,7 +11,7 @@ from scipy.stats import expon, norm
 from scipy.stats import uniform
 
 
-# In[80]:
+# In[87]:
 
 
 class Robot(IdealRobot):
@@ -85,7 +85,7 @@ class Robot(IdealRobot):
         self.pose = self.kidnap(self.pose, time_interval)
 
 
-# In[104]:
+# In[88]:
 
 
 class Camera(IdealCamera):
@@ -97,7 +97,7 @@ class Camera(IdealCamera):
                 distance_bias_rate_stddev=0.1, direction_bias_stddev=math.pi/90,
                 phantom_prob=0.5, phantom_range_x=(-5.0,5.0), phantom_range_y=(-5.0,5.0),
                 oversight_prob=0.1,
-                occulusion_prob=0.1):
+                occlusion_prob=0.1):
         super().__init__(env_map, distance_range, direction_range)
         
         self.distance_noise_rate = distance_noise_rate
@@ -111,7 +111,7 @@ class Camera(IdealCamera):
         
         self.oversight_prob = oversight_prob
         
-        self.occulusion_prob = occulusion_prob
+        self.occlusion_prob = occlusion_prob
                
     def noise(self, relpos):
         ell = norm.rvs(loc=relpos[0], scale=relpos[0]*self.distance_noise_rate)
@@ -128,14 +128,14 @@ class Camera(IdealCamera):
         else:
             return relpos
     
-    def oversight_prob(self, relpos)
+    def oversight(self, relpos):
         if uniform.rvs() < self.oversight_prob:
             return None
         else:
             return relpos
         
-    def occulusion_prob(self, relpos):
-        if uniform.rvs() < self.occulusion_prob:
+    def occlusion(self, relpos):
+        if uniform.rvs() < self.occlusion_prob:
             ell = relpos[0] + uniform.rvs()*(self.distance_range[1]-relpos[0])
             return np.array([ell, relpos[1]]).T
         else:
@@ -146,7 +146,7 @@ class Camera(IdealCamera):
         for lm in self.map.landmarks:
             z = self.observation_function(cam_pose, lm.pos)
             z = self.phantom(cam_pose, z)
-            z = self.occulusion(z)
+            z = self.occlusion(z)
             z = self.oversight(z)
             
             if self.visible(z):
@@ -158,7 +158,7 @@ class Camera(IdealCamera):
         return observed
 
 
-# In[108]:
+# In[89]:
 
 
 # world = World(30, 0.1)
@@ -177,7 +177,7 @@ class Camera(IdealCamera):
 # world.draw()
 
 
-# In[110]:
+# In[90]:
 
 
 if __name__ == '__main__':
