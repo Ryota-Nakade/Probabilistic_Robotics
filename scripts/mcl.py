@@ -132,7 +132,7 @@ def trial():
 
     ### 地図を生成して3つランドマークを追加 ###
     m = Map()
-    for ln in [(-4,2), (2,-3)]: m.append_landmark(Landmark(*ln))
+    for ln in [(-4,2), (2,-3), (3,3)]: m.append_landmark(Landmark(*ln))
     world.append(m)          
 
     ### ロボットを作る ###
@@ -144,7 +144,7 @@ def trial():
 
     world.draw()
     
-# trial()
+#trial()
 
 
 # In[ ]:
